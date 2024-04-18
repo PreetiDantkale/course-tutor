@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_18_133156) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_18_133727) do
   create_table "courses", force: :cascade do |t|
     t.string "name"
     t.string "status"
@@ -23,4 +23,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_18_133156) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tutors", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.string "address"
+    t.decimal "experience"
+    t.string "status"
+    t.integer "course_id", null: false
+    t.string "specialization"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_tutors_on_course_id"
+  end
+
+  add_foreign_key "tutors", "courses"
 end
