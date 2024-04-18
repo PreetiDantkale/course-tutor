@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   def index
-    render json: Course.all
+    courses = Course.includes(:tutors).all
+    render json: courses, include: { tutors: { only: [:name, :email] } }, status: :ok
   end
 
   def create
@@ -23,7 +24,7 @@ class CoursesController < ApplicationController
     params.require(:tutors).map { |t| t.permit(:name, :email, :phone, :address, :experience, :specialization, :status) }
   end
 
-  def create_tutors
+  def create_tutors(course)
     tutor_params.each do |tutor_param|
       course.tutors.create(tutor_param)
     end
